@@ -1,19 +1,56 @@
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { formatEther, parseEther } from "ethers/lib/utils";
+import { ethers, network } from "hardhat";
+import { DeadmansSwitch } from "../typechain"
+  ;
 
-describe("Greeter", function () {
-  it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
+describe("Deadman's Switch", function () {
 
-    expect(await greeter.greet()).to.equal("Hello, world!");
+  let account0: SignerWithAddress, account1: SignerWithAddress, deadman: DeadmansSwitch
 
-    const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
+  this.beforeAll(async function () {
+    const [_account0, _account1] = await ethers.getSigners()
+    account0 = _account0
+    account1 = _account1
 
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
+    const Deadman = await ethers.getContractFactory('DeadmansSwitch')
+    deadman = await Deadman.deploy(_account1.address)
+  })
 
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
-  });
+  it("Should Accept Ether", async function () {
+    let ethBalance = +formatEther(await deadman.provider.getBalance(deadman.address))
+    // console.log("Final Ether balance of Contract", ethBalance)
+
+    const amount = 1
+    const result = await account0.sendTransaction({
+      to: deadman.address,
+      value: parseEther(amount.toString())
+    })
+    await result.wait(1)
+
+    ethBalance = +formatEther(await deadman.provider.getBalance(deadman.address))
+    // console.log("Final Ether balance of Contract", ethBalance)
+
+    expect(ethBalance).to.equal(amount)
+  })
+
+  it("Should Transfer Ether to emergencyAddress if deadman", async function () {
+    const emergencyAddress = await deadman.emergencyAddress()
+
+    const blockFrequency = (await deadman.blockFrequency()).toNumber()
+    const blockFrequencyHex = '0x' + blockFrequency.toString(16)
+
+    // Mine 'blockFrequency = 10' blocks
+    await network.provider.send("hardhat_mine", [blockFrequencyHex])
+
+    const initialBalance = await ethers.provider.getBalance(emergencyAddress)
+    const contractBalance = await ethers.provider.getBalance(deadman.address)
+
+    await deadman.rescueFunds()
+
+    const finalBalance = await ethers.provider.getBalance(emergencyAddress)
+
+    expect(finalBalance).to.be.equal(initialBalance.add(contractBalance))
+  })
 });
