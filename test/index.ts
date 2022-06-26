@@ -6,12 +6,11 @@ import { DeadmansSwitch } from "../typechain";
 
 describe("Deadman's Switch", function () {
 
-  let account0: SignerWithAddress, account1: SignerWithAddress, deadman: DeadmansSwitch
+  let account0: SignerWithAddress, deadman: DeadmansSwitch
 
   this.beforeAll(async function () {
     const [_account0, _account1] = await ethers.getSigners()
     account0 = _account0
-    account1 = _account1
 
     const Deadman = await ethers.getContractFactory('DeadmansSwitch')
     deadman = await Deadman.deploy(_account1.address)
