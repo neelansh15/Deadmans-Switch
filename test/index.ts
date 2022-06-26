@@ -35,6 +35,24 @@ describe("Deadman's Switch", function () {
     expect(ethBalance).to.equal(amount)
   })
 
+  it("Should not transfer funds if still alive", async function () {
+    const emergencyAddress = await deadman.emergencyAddress()
+
+    const blockFrequency = (await deadman.blockFrequency()).toNumber() / 2
+    const blockFrequencyHex = '0x' + blockFrequency.toString(16)
+
+    // Mine "blockFrequency / 2 = 10 / 2 = 5" blocks
+    await network.provider.send("hardhat_mine", [blockFrequencyHex])
+
+    const initialBalance = await ethers.provider.getBalance(emergencyAddress)
+
+    await deadman.rescueFunds()
+
+    const finalBalance = await ethers.provider.getBalance(emergencyAddress)
+
+    expect(finalBalance).to.be.equal(initialBalance)
+  })
+
   it("Should Transfer Ether to emergencyAddress if deadman", async function () {
     const emergencyAddress = await deadman.emergencyAddress()
 
