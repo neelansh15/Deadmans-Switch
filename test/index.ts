@@ -2,8 +2,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import { ethers, network } from "hardhat";
-import { DeadmansSwitch } from "../typechain"
-  ;
+import { DeadmansSwitch } from "../typechain";
 
 describe("Deadman's Switch", function () {
 

@@ -1,3 +1,8 @@
+# Deadman's Switch
+Store funds securely. The owner has to call the `stillAlive` function at a certain frequency. If the owner fails to do so, that is, they are considered dead, then the funds will be sent to the emergency address specified beforeHand by calling `rescueFunds` which can be called by anyone.
+
+Deployed and Verified on Goerli: https://goerli.etherscan.io/address/0x8C51Aec2eAf32852DeD8D89a75Ffd499ed7E7547
+
 # Advanced Sample Hardhat Project
 
 This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.

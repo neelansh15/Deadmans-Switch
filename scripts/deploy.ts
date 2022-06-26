@@ -3,6 +3,7 @@
 //
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
+import { writeFileSync } from "fs";
 import { ethers } from "hardhat";
 
 async function main() {
@@ -14,12 +15,19 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Greeter = await ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  const Deadman = await ethers.getContractFactory("DeadmansSwitch");
+  const deadman = await Deadman.deploy("0xf475D99Be3241c69454eA8AF7B12F38078F697bc");
 
-  await greeter.deployed();
+  await deadman.deployed();
 
-  console.log("Greeter deployed to:", greeter.address);
+  console.log("Deadman's Switch deployed to:", deadman.address);
+
+  const data = JSON.stringify({
+    address: deadman.address,
+    abi: JSON.parse(deadman.interface.format('json') as string)
+  })
+
+  writeFileSync('./abis/DeadmansSwitch.json', data)
 }
 
 // We recommend this pattern to be able to use async/await everywhere

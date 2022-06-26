@@ -1,0 +1,186 @@
+{
+    "address": "0x8C51Aec2eAf32852DeD8D89a75Ffd499ed7E7547",
+    "abi": [
+        {
+            "type": "constructor",
+            "payable": false,
+            "inputs": [
+                {
+                    "type": "address",
+                    "name": "_emergencyAddress"
+                }
+            ]
+        },
+        {
+            "type": "event",
+            "anonymous": false,
+            "name": "OwnershipTransferred",
+            "inputs": [
+                {
+                    "type": "address",
+                    "name": "previousOwner",
+                    "indexed": true
+                },
+                {
+                    "type": "address",
+                    "name": "newOwner",
+                    "indexed": true
+                }
+            ]
+        },
+        {
+            "type": "event",
+            "anonymous": false,
+            "name": "ReceivedEther",
+            "inputs": [
+                {
+                    "type": "address",
+                    "name": "sender",
+                    "indexed": true
+                },
+                {
+                    "type": "uint256",
+                    "name": "amount",
+                    "indexed": false
+                }
+            ]
+        },
+        {
+            "type": "event",
+            "anonymous": false,
+            "name": "RescuedFunds",
+            "inputs": [
+                {
+                    "type": "address",
+                    "name": "caller",
+                    "indexed": true
+                },
+                {
+                    "type": "address",
+                    "name": "emergencyAddress",
+                    "indexed": true
+                },
+                {
+                    "type": "uint256",
+                    "name": "amount",
+                    "indexed": false
+                }
+            ]
+        },
+        {
+            "type": "function",
+            "name": "blockFrequency",
+            "constant": true,
+            "stateMutability": "view",
+            "payable": false,
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "uint256"
+                }
+            ]
+        },
+        {
+            "type": "function",
+            "name": "emergencyAddress",
+            "constant": true,
+            "stateMutability": "view",
+            "payable": false,
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "address"
+                }
+            ]
+        },
+        {
+            "type": "function",
+            "name": "lastBlock",
+            "constant": true,
+            "stateMutability": "view",
+            "payable": false,
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "uint256"
+                }
+            ]
+        },
+        {
+            "type": "function",
+            "name": "owner",
+            "constant": true,
+            "stateMutability": "view",
+            "payable": false,
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "address"
+                }
+            ]
+        },
+        {
+            "type": "function",
+            "name": "renounceOwnership",
+            "constant": false,
+            "payable": false,
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "type": "function",
+            "name": "rescueFunds",
+            "constant": false,
+            "payable": false,
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "type": "function",
+            "name": "setBlockFrequency",
+            "constant": false,
+            "payable": false,
+            "inputs": [
+                {
+                    "type": "uint256",
+                    "name": "_blockFrequency"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "type": "function",
+            "name": "setEmergencyAddress",
+            "constant": false,
+            "payable": false,
+            "inputs": [
+                {
+                    "type": "address",
+                    "name": "_emergencyAddress"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "type": "function",
+            "name": "stillAlive",
+            "constant": false,
+            "payable": false,
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "type": "function",
+            "name": "transferOwnership",
+            "constant": false,
+            "payable": false,
+            "inputs": [
+                {
+                    "type": "address",
+                    "name": "newOwner"
+                }
+            ],
+            "outputs": []
+        }
+    ]
+}
