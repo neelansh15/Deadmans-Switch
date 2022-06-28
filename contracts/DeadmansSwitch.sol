@@ -38,10 +38,9 @@ contract DeadmansSwitch is Ownable {
     }
 
     function rescueFunds() external {
-        if (block.number > lastBlock + blockFrequency) {
-            uint256 balance = address(this).balance;
-            payable(emergencyAddress).transfer(balance);
-            emit RescuedFunds(msg.sender, emergencyAddress, balance);
-        }
+        require(block.number > lastBlock + blockFrequency, "Owner is still alive");
+        uint256 balance = address(this).balance;
+        payable(emergencyAddress).transfer(balance);
+        emit RescuedFunds(msg.sender, emergencyAddress, balance);
     }
 }
